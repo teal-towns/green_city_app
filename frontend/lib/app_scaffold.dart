@@ -226,13 +226,21 @@ class _AppScaffoldState extends State<AppScaffoldComponent> {
           Expanded(
             child: Container(
               color: Colors.white,
-              child: Align(
-                alignment: Alignment.center,
-                child: Container(
-                  width: 1200,
-                  child: widget.body,
-                  color: Colors.white,
-                )
+              child: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/greencity-light.png'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                    width: 1200,
+                    child: widget.body,
+                    color: Color.fromRGBO(255,255,255,0.8),
+                  )
+                ),
               )
             )
           ),
@@ -241,13 +249,21 @@ class _AppScaffoldState extends State<AppScaffoldComponent> {
     }
     return Container(
       color: Colors.white,
-      child: Align(
-        alignment: Alignment.center,
-        child: Container(
-          width: 1200,
-          child: widget.body,
-          color: Colors.white,
-        )
+      child: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/greencity-light.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Align(
+          alignment: Alignment.center,
+          child: Container(
+            width: 1200,
+            child: widget.body,
+            color: Color.fromRGBO(255,255,255,0.8),
+          )
+        ),
       )
     );
   }
@@ -267,6 +283,9 @@ class _AppScaffoldState extends State<AppScaffoldComponent> {
         title: Image.asset('assets/images/logo.png', width: 100, height: 50),
         actions: <Widget>[
           _buildNavButton('/home', 'Home', Icons.home, context),
+          _buildNavButton('/blog', 'Blog', Icons.description, context),
+          _buildNavButton('/design', 'Design', Icons.hive, context),
+          _buildNavButton('/team', 'Team', Icons.diversity_3, context),
           _buildUserButton(context, currentUserState),
           _buildDrawerButton(context),
         ],

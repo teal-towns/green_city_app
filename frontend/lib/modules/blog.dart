@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../app_scaffold.dart';
 
-class HomeComponent extends StatefulWidget {
+class Blog extends StatefulWidget {
   @override
-  _HomeComponentState createState() => _HomeComponentState();
+  _BlogState createState() => _BlogState();
 }
 
-class _HomeComponentState extends State<HomeComponent> {
+class _BlogState extends State<Blog> {
 
   @override
   void initState() {
@@ -19,7 +19,7 @@ class _HomeComponentState extends State<HomeComponent> {
     return AppScaffoldComponent(
       body: ListView(
         children: [
-          Text('Home'),
+          Text('Blog'),
         ]
       )
     );
