@@ -9,6 +9,8 @@ from permission import permission_user
 import user_auth
 import websocket_clients as _websocket_clients
 
+from blog import blog as _blog
+
 config = ml_config.get_config()
 
 def routeIt(route, data, auth):
@@ -31,8 +33,10 @@ def routeIt(route, data, auth):
     ]
 
     admin = [
+        "removeBlog",
+        "saveBlog",
     ]
-    if route in perms or route in userIdRequired:
+    if route in perms or route in userIdRequired or route in admin:
         if len(auth['user_id']) == 0:
             ret['msg'] = "Empty user id."
             return ret
@@ -172,6 +176,21 @@ def routeIt(route, data, auth):
         ret['valid'] = '1'
         ret['user'] = user
         ret = formatRet(data, ret)
+
+    elif route == 'saveBlog':
+        ret = _blog.Save(data['blog'], auth['user_id'])
+    elif route == 'getBlogs':
+        title = data['title'] if 'title' in data else ''
+        tags = data['tags'] if 'tags' in data else []
+        user_id_creator = data['user_id_creator'] if 'user_id_creator' in data else ''
+        slug = data['slug'] if 'slug' in data else ''
+        limit = data['limit'] if 'limit' in data else 25
+        skip = data['skip'] if 'skip' in data else 0
+        sortKey = data['sortKey'] if 'sortKey' in data else ''
+        ret = _blog.Get(title, tags, user_id_creator, slug, limit = limit, skip = skip,
+            sortKey = sortKey)
+    elif route == 'removeBlog':
+        ret = _blog.Remove(data['id'])
 
     ret['_msgId'] = msgId
     return ret
