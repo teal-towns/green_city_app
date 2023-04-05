@@ -11,6 +11,7 @@ import './modules/user_auth/user_signup.dart';
 
 import './modules/blog.dart';
 import './modules/design.dart';
+import './modules/lend_library.dart';
 import './modules/team.dart';
 
 class Routes {
@@ -24,6 +25,7 @@ class Routes {
 
   static const blog = '/blog';
   static const design = '/design';
+  static const lendLibrary = '/lend-library';
   static const team = '/team';
 }
 
@@ -71,6 +73,10 @@ class AppGoRouter {
       GoRoute(
         path: Routes.design,
         builder: (BuildContext context, GoRouterState state) => Design(),
+      ),
+      GoRoute(
+        path: Routes.lendLibrary,
+        builder: (BuildContext context, GoRouterState state) => LendLibrary(),
       ),
       GoRoute(
         path: Routes.team,

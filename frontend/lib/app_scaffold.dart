@@ -83,6 +83,13 @@ class _AppScaffoldState extends State<AppScaffoldComponent> {
     return SizedBox.shrink();
   }
 
+  Widget _buildLogInButton(context, currentUserState) {
+    if (currentUserState.isLoggedIn) {
+      return SizedBox.shrink();
+    }
+    return _buildLinkButton(context, '/login', 'Log In');
+  }
+
   Widget _buildNavButton(String route, String text, IconData icon, BuildContext context, { double width = 100, double fontSize = 13 }) {
     return ElevatedButton(
       onPressed: () {
@@ -166,6 +173,8 @@ class _AppScaffoldState extends State<AppScaffoldComponent> {
               ),
             ],
           ),
+          _buildLinkButton(context, '/home', 'Home'),
+          _buildLogInButton(context, currentUserState),
           _buildLogoutButton(context, currentUserState),
           ...columns,
         ],
@@ -282,11 +291,12 @@ class _AppScaffoldState extends State<AppScaffoldComponent> {
         backgroundColor: Colors.white,
         title: Image.asset('assets/images/logo.png', width: 100, height: 50),
         actions: <Widget>[
-          _buildNavButton('/home', 'Home', Icons.home, context),
+          //_buildNavButton('/home', 'Home', Icons.home, context),
           _buildNavButton('/blog', 'Blog', Icons.description, context),
           _buildNavButton('/design', 'Design', Icons.hive, context),
+          _buildNavButton('/lend-library', 'Lend Library', Icons.build, context),
           _buildNavButton('/team', 'Team', Icons.diversity_3, context),
-          _buildUserButton(context, currentUserState),
+          //_buildUserButton(context, currentUserState),
           _buildDrawerButton(context),
         ],
       ),
