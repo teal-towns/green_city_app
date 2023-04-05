@@ -9,7 +9,9 @@ import './modules/user_auth/user_logout.dart';
 import './modules/user_auth/user_password_reset.dart';
 import './modules/user_auth/user_signup.dart';
 
-import './modules/blog.dart';
+import './modules/blog/blog_list.dart';
+import './modules/blog/blog_save.dart';
+import './modules/blog/blog_view.dart';
 import './modules/design.dart';
 import './modules/lend_library.dart';
 import './modules/team.dart';
@@ -23,7 +25,9 @@ class Routes {
   static const passwordReset = '/password-reset';
   static const signup = '/signup';
 
-  static const blog = '/blog';
+  static const blogList = '/blog';
+  static const blogSave = '/blog-save';
+  static const blogView = '/b/:slug';
   static const design = '/design';
   static const lendLibrary = '/lend-library';
   static const team = '/team';
@@ -67,8 +71,22 @@ class AppGoRouter {
       ),
 
       GoRoute(
-        path: Routes.blog,
-        builder: (BuildContext context, GoRouterState state) => Blog(),
+        path: Routes.blogList,
+        builder: (BuildContext context, GoRouterState state) => BlogList(),
+      ),
+      GoRoute(
+        path: Routes.blogSave,
+        builder: (BuildContext context, GoRouterState state) => BlogSave(),
+      ),
+      GoRoute(
+        path: Routes.blogView,
+        builder: (BuildContext context, GoRouterState state) {
+          String slug = state.params["slug"]!;
+          if (slug != null) {
+            return BlogView(slug: slug);
+          }
+          return BlogList();
+        }
       ),
       GoRoute(
         path: Routes.design,
