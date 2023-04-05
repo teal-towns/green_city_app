@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:green_city_app/common/youtube_service.dart';
 
 import '../app_scaffold.dart';
 
@@ -9,25 +10,28 @@ class Design extends StatefulWidget {
 
 class _DesignState extends State<Design> {
 
-  //late VideoPlayerController _videoController;
-
-  @override
-  void initState() {
-    super.initState();
-
-    //_videoController = VideoPlayerController.network(
-    //  'https://www.youtube.com/watch?v=i0o6W7H-xEA',
-    //);
-  }
+  static const Map<String, String> _videosLabelAndId = {
+    'Bioplan':'i0o6W7H-xEA',
+    'Flythrough':'balxUsoU1gU',
+  };
 
   @override
   Widget build(BuildContext context) {
     return AppScaffoldComponent(
-      body: ListView(
-        children: [
-          Text('TODO'),
-        ]
-      )
+      body: ListView.builder(
+          itemCount: _videosLabelAndId.length,
+          itemBuilder: (context, index){
+            return Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Column(
+                children: [
+                  CustomYoutubePlayer(videoId: _videosLabelAndId.values.elementAt(index)),
+                  Text(_videosLabelAndId.keys.elementAt(index))
+                ],
+              ),
+            );
+          })
     );
   }
+
 }

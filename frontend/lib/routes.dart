@@ -39,49 +39,125 @@ class AppGoRouter {
     routes: [
       GoRoute(
         path: Routes.home,
-        builder: (BuildContext context, GoRouterState state) => HomeComponent(),
+        pageBuilder: (BuildContext context, GoRouterState state){
+          return CustomTransitionPage(child: HomeComponent(), transitionsBuilder: (context, animation, secondaryAnimation, child){
+            return FadeTransition(
+              opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+              child: child,
+            );
+          });
+        }
       ),
       GoRoute(
         path: Routes.login,
-        builder: (context, state) => UserLoginComponent(),
+          pageBuilder: (BuildContext context, GoRouterState state){
+            return CustomTransitionPage(child: UserLoginComponent(), transitionsBuilder: (context, animation, secondaryAnimation, child){
+              return FadeTransition(
+                opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+                child: child,
+              );
+            });
+          }
       ),
       GoRoute(
         path: Routes.logout,
-        builder: (context, state) => UserLogoutComponent(),
+          pageBuilder: (BuildContext context, GoRouterState state){
+            return CustomTransitionPage(child: UserLogoutComponent(), transitionsBuilder: (context, animation, secondaryAnimation, child){
+              return FadeTransition(
+                opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+                child: child,
+              );
+            });
+          }
       ),
       GoRoute(
         path: Routes.signup,
-        builder: (context, state) => UserSignupComponent(),
+          pageBuilder: (BuildContext context, GoRouterState state){
+            return CustomTransitionPage(child: UserSignupComponent(), transitionsBuilder: (context, animation, secondaryAnimation, child){
+              return FadeTransition(
+                opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+                child: child,
+              );
+            });
+          }
       ),
       GoRoute(
         path: Routes.emailVerify,
-        builder: (context, state) => UserEmailVerifyComponent(),
+          pageBuilder: (BuildContext context, GoRouterState state){
+            return CustomTransitionPage(child: UserEmailVerifyComponent(), transitionsBuilder: (context, animation, secondaryAnimation, child){
+              return FadeTransition(
+                opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+                child: child,
+              );
+            });
+          }
       ),
       GoRoute(
         path: Routes.passwordReset,
-        builder: (context, state) => UserPasswordResetComponent(),
+          pageBuilder: (BuildContext context, GoRouterState state){
+            return CustomTransitionPage(child: UserPasswordResetComponent(), transitionsBuilder: (context, animation, secondaryAnimation, child){
+              return FadeTransition(
+                opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+                child: child,
+              );
+            });
+          }
       ),
       GoRoute(
         path: Routes.notFound,
-        builder: (context, state) => RouteNotFoundPage(),
+          pageBuilder: (BuildContext context, GoRouterState state){
+            return CustomTransitionPage(child: RouteNotFoundPage(), transitionsBuilder: (context, animation, secondaryAnimation, child){
+              return FadeTransition(
+                opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+                child: child,
+              );
+            });
+          }
       ),
 
       GoRoute(
         path: Routes.blog,
-        builder: (BuildContext context, GoRouterState state) => Blog(),
+          pageBuilder: (BuildContext context, GoRouterState state){
+            return CustomTransitionPage(child: Blog(), transitionsBuilder: (context, animation, secondaryAnimation, child){
+              return FadeTransition(
+                opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+                child: child,
+              );
+            });
+          }
       ),
       GoRoute(
         path: Routes.design,
-        builder: (BuildContext context, GoRouterState state) => Design(),
+          pageBuilder: (BuildContext context, GoRouterState state){
+            return CustomTransitionPage(child: Design(), transitionsBuilder: (context, animation, secondaryAnimation, child){
+              return FadeTransition(
+                opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+                child: child,
+              );
+            });
+          }
       ),
       GoRoute(
         path: Routes.lendLibrary,
-        builder: (BuildContext context, GoRouterState state) => LendLibrary(),
+          pageBuilder: (BuildContext context, GoRouterState state){
+            return CustomTransitionPage(child: LendLibrary(), transitionsBuilder: (context, animation, secondaryAnimation, child){
+              return FadeTransition(
+                opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+                child: child,
+              );
+            });
+          }
       ),
       GoRoute(
         path: Routes.team,
-        builder: (BuildContext context, GoRouterState state) => Team(),
-      ),
+          pageBuilder: (BuildContext context, GoRouterState state){
+            return CustomTransitionPage(child: Team(), transitionsBuilder: (context, animation, secondaryAnimation, child){
+              return FadeTransition(
+                opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+                child: child,
+              );
+            });
+          }      ),
     ],
   );
 }
