@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'dart:html' as html;
 import '../app_scaffold.dart';
 
@@ -30,7 +32,7 @@ class _TeamState extends State<Team> {
    'Vera': {
      'imageUrl': 'assets/images/people/vera.jpeg',
      'linkedIn': 'https://www.linkedin.com/in/xuewei-qian-vera-68927695/',
-     'bio':'''Vera was the Software Engineer on a buzzing team that helps the bees, by building tools to provide beekeepers all around the world with AI-Driven Climate-Smart Beekeeping. Prior to that, she created the RunPee app with her husband. \nVera was born and raised in China. Another lifetime ago, she was a Marketing Manager in Beijing and worked with Coca-cola China, and LinkedIn China, to name a few. Vera is a self-taught software engineer and believes in equal opportunities in all aspects. She loves to live the local life wherever she travels, and never feels like an outsider on this planet named earth. She is living in the Blue Ridge mountains and loves the outdoors'''
+     'bio':'''Vera was the Software Engineer on a buzzing team build tools to provide beekeepers all around the world with AI-Driven Climate-Smart Beekeeping. Prior to that, she created the RunPee app with her husband. Vera was born and raised in China. She was a Marketing Manager in Beijing and worked with Coca-cola China, and LinkedIn China, to name a few. Vera is a self-taught software engineer and believes in equal opportunities in all.'''
    },
  };
 
@@ -40,10 +42,20 @@ class _TeamState extends State<Team> {
     return AppScaffoldComponent(
       body: Padding(
         padding: EdgeInsets.only(top: 20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: _memberBuilder(),
-        ),
+        child: LayoutBuilder(
+          builder: (context, constraints){
+            int count = constraints.maxWidth > 600? 2:1;
+            ScrollController _controller = ScrollController(keepScrollOffset: false);
+            return GridView.count(
+              controller: _controller,
+              shrinkWrap: true,
+              mainAxisSpacing: 40,
+              crossAxisSpacing: 40,
+              crossAxisCount: count,
+              children: _memberBuilder(),
+            );
+          },
+        )
       )
     );
   }
@@ -51,58 +63,67 @@ class _TeamState extends State<Team> {
   List<Widget> _memberBuilder(){
     List<Widget> _members = [];
     _membersImage.forEach((name, meta) {
-      Widget memberBox = Container(
-        constraints: BoxConstraints(
-          maxWidth: 200
-        ),
-        child: Column(
-          children: [
-        SizedBox(
-          width: 200,
-            height: 200,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-                child: Image(image: AssetImage(meta['imageUrl']))
-            )
-        ),
-            Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: Container(
-                decoration: BoxDecoration(
+      Widget memberBox = Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Flexible(
+            child: SizedBox(
+              width: 200,
+                height: 200,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                    child: Image(image: AssetImage(meta['imageUrl']))
+                )
+            ),
+          ),
+        Padding(
+          padding: EdgeInsets.all(8),
+          child: IntrinsicHeight(
+            child: Container( 
+              decoration: BoxDecoration(
                   color: Colors.black.withAlpha(12),
                   borderRadius: BorderRadius.circular(5)
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(name),
-                          IconButton(
-                              onPressed: (){
-                                html.window.open(meta['linkedIn'], 'new tab');
-                              },
-                              icon:FaIcon(
-                                FontAwesomeIcons.linkedinIn,
-                                size: 18,)
-                          )
-                        ],
-                      ),
-                      Text(meta['bio']),
-                    ],
-                  ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                            name,
+                            style:Theme.of(context).textTheme.displaySmall),
+                        IconButton(
+                            onPressed: () async{
+                              if (kIsWeb){
+                                html.window.open( meta['linkedIn'], 'new tab');
+                              } else {
+                                if (await canLaunchUrl(meta['linkedIn'])){
+                                  await launchUrl(meta['linkedIn']);
+                                } else {
+                                  throw "Could not launch ${meta}";
+                                }
+
+                              }
+                            },
+                            icon:FaIcon(
+                              FontAwesomeIcons.linkedinIn,
+                              size: 18,)
+                        )
+                      ],
+                    ),
+                    Expanded(child: Text(meta['bio'])),
+                  ],
                 ),
               ),
-            )
-          ],
+            ),
+          ),
         ),
+        ],
       );
-
       _members.add(memberBox);
     });
-
 
     return _members;
   }
