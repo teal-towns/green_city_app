@@ -18,20 +18,31 @@ class _DesignState extends State<Design> {
   @override
   Widget build(BuildContext context) {
     return AppScaffoldComponent(
-      body: ListView.builder(
-          itemCount: _videosLabelAndId.length,
-          itemBuilder: (context, index){
-            return Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Column(
-                children: [
-                  CustomYoutubePlayer(videoId: _videosLabelAndId.values.elementAt(index)),
-                  Text(_videosLabelAndId.keys.elementAt(index))
-                ],
-              ),
-            );
-          })
+      body: Wrap(
+          alignment: WrapAlignment.center,
+          children: _videoBuilder(),
+          )
     );
   }
 
+  List<Widget> _videoBuilder(){
+      List<Widget> _videos = [];
+      _videosLabelAndId.forEach((name, id) {
+        Widget _video = Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            children: [
+              Container(
+                  constraints: BoxConstraints(
+                    maxWidth: 500
+                  ),
+                  child: CustomYoutubePlayer(videoId: id)),
+              Text(name)
+            ],
+          ),
+        );
+        _videos.add(_video);
+      });
+    return _videos;
+  }
 }
