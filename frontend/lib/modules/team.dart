@@ -12,19 +12,20 @@ class _TeamState extends State<Team> {
  Map<String, dynamic> _membersImage = {
    'Isak': {
      'imageUrl': 'images/people/isak.jpeg',
-     'bio': 'placeholder placeholder placeholder placeholder placeholder',
+     'bio': '''Experienced Machine Learning Engineer with a demonstrated history of working in the renewables and environment industry. Skilled in Unity AR, Neural Networks, OpenCV, and Google Cloud. Strong engineering professional with a Master’s degree focused in Computer Science from Georgia Institute of Technology.''',
    },
    'Lora': {
      'imageUrl': 'images/people/lora.jpeg',
-     'bio': 'placeholder',
+     'bio': '''Lora is a frontend developer and UI / UX designer with experience developing and implementing visual designs in both 3D-modeling software and code ( Flutter , React , Unity, Blender for 3D-modeling ) and utilizing the full Adobe client & prototyping tools (Illustrator, Photoshop, InDesign, After Effects, Premiere Pro, XD, Figma)''',
    },
    'Luke': {
      'imageUrl': 'images/people/luke.jpeg',
-     'bio': 'placeholder',
+     'bio': '''Luke is born and raised in the Bay Area and grew up camping with his family, which is part of where his love for nature came from. In college he dreamed of mixing his passions of health and fitness, the environment and community together to start a Green Gym. After 15 years of software development and entrepreneurship spanning full stack, mobile, Unity and machine learning, that pulled him away from environmental work, he found his way back to it'''
+
    },
    'Vera': {
      'imageUrl': 'images/people/vera.jpeg',
-     'bio':'placeholder',
+     'bio':'''Vera was the Software Engineer on a buzzing team that helps the bees, by building tools to provide beekeepers all around the world with AI-Driven Climate-Smart Beekeeping. Prior to that, she created the RunPee app with her husband. \nVera was born and raised in China. Another lifetime ago, she was a Marketing Manager in Beijing and worked with Coca-cola China, and LinkedIn China, to name a few. Vera is a self-taught software engineer and believes in equal opportunities in all aspects. She loves to live the local life wherever she travels, and never feels like an outsider on this planet named earth. She is living in the Blue Ridge mountains and loves the outdoors'''
    },
  };
 
@@ -32,7 +33,8 @@ class _TeamState extends State<Team> {
   @override
   Widget build(BuildContext context) {
     return AppScaffoldComponent(
-      body: Container(
+      body: Padding(
+        padding: EdgeInsets.only(top: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: _memberBuilder(),
@@ -46,7 +48,7 @@ class _TeamState extends State<Team> {
     _membersImage.forEach((name, meta) {
       Widget memberBox = Container(
         constraints: BoxConstraints(
-          maxWidth: 200,
+          maxWidth: 200
         ),
         child: Column(
           children: [

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:green_city_app/common/youtube_service.dart';
+import '../common/youtube_service.dart';
 
 import '../app_scaffold.dart';
 
