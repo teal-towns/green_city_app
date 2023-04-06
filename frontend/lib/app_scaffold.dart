@@ -5,7 +5,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 import './modules/user_auth/current_user_state.dart';
 import './routes.dart';
-import './third-party/custom_icon_icons.dart';
 
 _launchURL(url) async {
   //const url = 'https://flutter.dev';
@@ -289,7 +288,10 @@ class _AppScaffoldState extends State<AppScaffoldComponent> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
-        title: Image.asset('assets/images/logo.png', width: 100, height: 50),
+        title: GestureDetector(
+          child: Image.asset('assets/images/logo.png', width: 100, height: 50),
+          onTap: ()=> context.go(Routes.home),
+        ),
         actions: <Widget>[
           //_buildNavButton('/home', 'Home', Icons.home, context),
           _buildNavButton('/blog', 'Blog', Icons.description, context),

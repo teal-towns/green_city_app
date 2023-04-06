@@ -81,7 +81,7 @@ class AppGoRouter {
       GoRoute(
         path: Routes.blogView,
         builder: (BuildContext context, GoRouterState state) {
-          String slug = state.params["slug"]!;
+          String? slug = state.params["slug"];
           if (slug != null) {
             return BlogView(slug: slug);
           }
