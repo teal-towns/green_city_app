@@ -175,9 +175,11 @@ class _LendLibraryState extends State<LendLibrary> {
       if (coordinates.latitude != null) {
         _filters['lat'] = coordinates.latitude!;
         _filters['lng'] = coordinates.longitude!;
-        setState(() {
-          _filters = _filters;
-        });
+        if(mounted){
+          setState(() {
+            _filters = _filters;
+          });
+        }
       }
       _locationLoaded = true;
       checkFirstLoad();
@@ -304,11 +306,13 @@ class _LendLibraryState extends State<LendLibrary> {
   }
 
   void _getLendLibraryItems({int lastPageNumber = 0}) {
-    setState(() {
-      _loading = true;
-      _message = '';
-      _canLoadMore = false;
-    });
+    if(mounted){
+      setState(() {
+        _loading = true;
+        _message = '';
+        _canLoadMore = false;
+      });
+    }
     if (lastPageNumber != 0) {
       _lastPageNumber = lastPageNumber;
     } else {
