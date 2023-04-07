@@ -196,7 +196,7 @@ class _LendLibraryState extends State<LendLibrary> {
 
   _buildLendLibraryItem(LendLibraryItemClass lendLibraryItem, BuildContext context, var currentUserState) {
     var buttons = [];
-    if (lendLibraryItem.userIdOwner == currentUserState.currentUser.id) {
+    if (currentUserState.isLoggedIn && lendLibraryItem.userIdOwner == currentUserState.currentUser.id) {
       buttons = [
         ElevatedButton(
           onPressed: () {
@@ -217,7 +217,7 @@ class _LendLibraryState extends State<LendLibrary> {
         ),
       ];
     }
-    if (lendLibraryItem.userIdOwner != currentUserState.currentUser.id) {
+    if (currentUserState.isLoggedIn && lendLibraryItem.userIdOwner != currentUserState.currentUser.id) {
       buttons += [
         SizedBox(width: 10),
         ElevatedButton(
