@@ -15,7 +15,7 @@ class UserClass {
     this.session_id = jsonData.containsKey('session_id') ? jsonData['session_id'] : '';
     this.roles = jsonData.containsKey('roles') ? jsonData['roles'] : '';
     this.created_at = jsonData.containsKey('created_at') ? jsonData['created_at'] : '';
-    this.lngLat = jsonData.containsKey('lngLat') ? jsonData['lngLat'] : [];
+    this.lngLat = jsonData.containsKey('lngLat') ? [ jsonData['lngLat'][0].toDouble(), jsonData['lngLat'][1].toDouble() ] : [];
   }
 
   Map<String, dynamic> toJson() => {

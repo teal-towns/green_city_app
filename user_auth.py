@@ -28,6 +28,8 @@ def getUserFields():
         'username': True,
         'created_at': True,
         'updated_at': True,
+
+        'lngLat': True,
     }
 
 def checkEmail(email, fields=None):
