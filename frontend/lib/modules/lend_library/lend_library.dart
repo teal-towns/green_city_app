@@ -253,7 +253,9 @@ class _LendLibraryState extends State<LendLibrary> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.network(lendLibraryItem.imageUrl!, height: 300, width: double.infinity, fit: BoxFit.cover),
+          lendLibraryItem.imageUrl == ''?
+            Image.asset('assets/images/no-image-available-icon-flat-vector.jpeg', height: 300, width: double.infinity, fit: BoxFit.cover,)
+              :Image.network(lendLibraryItem.imageUrl!, height: 300, width: double.infinity, fit: BoxFit.cover),
           SizedBox(height: 5),
           Text(lendLibraryItem.title!,
             style: Theme.of(context).textTheme.headline2,
