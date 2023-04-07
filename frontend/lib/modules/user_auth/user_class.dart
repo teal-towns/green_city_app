@@ -2,8 +2,9 @@ class UserClass {
   String id = '', email = '', first_name = '', last_name = '', status = '', username = '',
     session_id = '', roles = '', created_at = '';
   //List<String> roles;
+  List<double> lngLat = [];
   UserClass(this.id, this.email, this.first_name, this.last_name, this.status, this.username, this.session_id, this.roles,
-    this.created_at);
+    this.created_at, this.lngLat);
   UserClass.fromJson(Map<String, dynamic> jsonData) {
     this.id = jsonData.containsKey('_id') ? jsonData['_id'] : '';
     this.email = jsonData.containsKey('email') ? jsonData['email'] : '';
@@ -14,6 +15,7 @@ class UserClass {
     this.session_id = jsonData.containsKey('session_id') ? jsonData['session_id'] : '';
     this.roles = jsonData.containsKey('roles') ? jsonData['roles'] : '';
     this.created_at = jsonData.containsKey('created_at') ? jsonData['created_at'] : '';
+    this.lngLat = jsonData.containsKey('lngLat') ? jsonData['lngLat'] : [];
   }
 
   Map<String, dynamic> toJson() => {
@@ -26,5 +28,6 @@ class UserClass {
     'session_id': session_id,
     'roles': roles,
     'created_at': created_at,
+    'lngLat': lngLat,
   };
 }

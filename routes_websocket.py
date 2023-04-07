@@ -10,6 +10,8 @@ import user_auth
 import websocket_clients as _websocket_clients
 
 from blog import blog as _blog
+from lend_library import lend_library as _lend_library
+from user import user as _user
 
 config = ml_config.get_config()
 
@@ -30,6 +32,9 @@ def routeIt(route, data, auth):
     ]
 
     userIdRequired = [
+        "removeLendLibraryItem",
+        "saveLendLibraryItem",
+        "saveUser",
     ]
 
     admin = [
@@ -191,6 +196,25 @@ def routeIt(route, data, auth):
             sortKey = sortKey)
     elif route == 'removeBlog':
         ret = _blog.Remove(data['id'])
+
+    elif route == 'saveLendLibraryItem':
+        ret = _lend_library.Save(data['lendLibraryItem'], auth['user_id'])
+    elif route == 'getLendLibraryItems':
+        title = data['title'] if 'title' in data else ''
+        tags = data['tags'] if 'tags' in data else []
+        userIdOwner = data['userIdOwner'] if 'userIdOwner' in data else ''
+        limit = data['limit'] if 'limit' in data else 25
+        skip = data['skip'] if 'skip' in data else 0
+        sortKey = data['sortKey'] if 'sortKey' in data else ''
+        withOwnerInfo = data['withOwnerInfo'] if 'withOwnerInfo' in data else 1
+        lngLatOrigin = data['lngLatOrigin'] if 'lngLatOrigin' in data else None
+        ret = _lend_library.Get(title, tags, userIdOwner, limit = limit, skip = skip,
+            sortKey = sortKey, withOwnerInfo = withOwnerInfo, lngLatOrigin = lngLatOrigin)
+    elif route == 'removeLendLibraryItem':
+        ret = _lend_library.Remove(data['id'])
+
+    elif route == 'saveUser':
+        ret = _user.SaveUser(data['user'])
 
     ret['_msgId'] = msgId
     return ret

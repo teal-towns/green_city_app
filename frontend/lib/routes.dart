@@ -13,7 +13,8 @@ import './modules/blog/blog_list.dart';
 import './modules/blog/blog_save.dart';
 import './modules/blog/blog_view.dart';
 import './modules/design.dart';
-import './modules/lend_library.dart';
+import './modules/lend_library/lend_library.dart';
+import './modules/lend_library/lend_library_item_save.dart';
 import './modules/team.dart';
 
 class Routes {
@@ -30,6 +31,7 @@ class Routes {
   static const blogView = '/b/:slug';
   static const design = '/design';
   static const lendLibrary = '/lend-library';
+  static const lendLibrarySave = '/lend-library-save';
   static const team = '/team';
 }
 
@@ -95,6 +97,10 @@ class AppGoRouter {
       GoRoute(
         path: Routes.lendLibrary,
         builder: (BuildContext context, GoRouterState state) => LendLibrary(),
+      ),
+      GoRoute(
+        path: Routes.lendLibrarySave,
+        builder: (BuildContext context, GoRouterState state) => LendLibraryItemSave(),
       ),
       GoRoute(
         path: Routes.team,
