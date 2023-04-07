@@ -10,7 +10,7 @@ class LendLibraryItemClass {
     this.title = json['title'];
     this.userIdOwner = json['userIdOwner'];
     this.description = json['description'];
-    this.imageUrl = json['imageUrl'];
+    this.imageUrl = json['imageUrl']?? '';
     //this.created_at = json['created_at'];
     this.tags = parseTags(json['tags'] != null ? json['tags'] : []);
     this.xOwner = json['xOwner'] != null ? json['xOwner'] : {};

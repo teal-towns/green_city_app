@@ -67,8 +67,6 @@ class _LendLibraryState extends State<LendLibrary> {
       }
       setState(() {
         _loading = false;
-        _message = _message;
-        _lendLibraryItems = _lendLibraryItems;
       });
     }));
 
@@ -82,7 +80,6 @@ class _LendLibraryState extends State<LendLibrary> {
       }
       setState(() {
         _loading = false;
-        _message = _message;
       });
     }));
 
@@ -173,13 +170,10 @@ class _LendLibraryState extends State<LendLibrary> {
     if (!_skipCurrentLocation) {
       var coordinates = await _location.getLocation();
       if (coordinates.latitude != null) {
-        _filters['lat'] = coordinates.latitude!;
-        _filters['lng'] = coordinates.longitude!;
-        if(mounted){
-          setState(() {
-            _filters = _filters;
-          });
-        }
+        setState(() {
+          _filters['lat'] = coordinates.latitude!;
+          _filters['lng'] = coordinates.longitude!;
+        });
       }
       _locationLoaded = true;
       checkFirstLoad();
@@ -224,11 +218,10 @@ class _LendLibraryState extends State<LendLibrary> {
         SizedBox(width: 10),
         ElevatedButton(
           onPressed: () {
-            _selectedLendLibraryItem = {
-              'id': lendLibraryItem.id!,
-            };
             setState(() {
-              _selectedLendLibraryItem = _selectedLendLibraryItem;
+              _selectedLendLibraryItem = {
+                'id': lendLibraryItem.id!,
+              };
             });
           },
           child: Text('Borrow'),
@@ -260,7 +253,9 @@ class _LendLibraryState extends State<LendLibrary> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.network(lendLibraryItem.imageUrl!, height: 300, width: double.infinity, fit: BoxFit.cover),
+          lendLibraryItem.imageUrl == ''?
+            Image.asset('assets/images/no-image-available-icon-flat-vector.jpeg', height: 300, width: double.infinity, fit: BoxFit.cover,)
+              :Image.network(lendLibraryItem.imageUrl!, height: 300, width: double.infinity, fit: BoxFit.cover),
           SizedBox(height: 5),
           Text(lendLibraryItem.title!,
             style: Theme.of(context).textTheme.headline2,
