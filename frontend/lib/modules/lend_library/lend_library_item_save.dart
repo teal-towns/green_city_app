@@ -119,19 +119,17 @@ class _LendLibraryItemSaveState extends State<LendLibraryItemSave> {
   void _init() async {
     var currentUser = Provider.of<CurrentUserState>(context, listen: false).currentUser;
     if (currentUser.lngLat.length > 0) {
-      _formValsUser['longitude'] = currentUser.lngLat[0];
-      _formValsUser['latitude'] = currentUser.lngLat[1];
       setState(() {
-        _formValsUser = _formValsUser;
+        _formValsUser['longitude'] = currentUser.lngLat[0];
+        _formValsUser['latitude'] = currentUser.lngLat[1];
       });
     }
     else if (!_skipCurrentLocation) {
       var coordinates = await _location.getLocation();
       if (coordinates.latitude != null) {
-        _formValsUser['latitude'] = coordinates.latitude!;
-        _formValsUser['longitude'] = coordinates.longitude!;
         setState(() {
-          _formValsUser = _formValsUser;
+          _formValsUser['latitude'] = coordinates.latitude!;
+          _formValsUser['longitude'] = coordinates.longitude!;
         });
       }
     }
@@ -157,10 +155,7 @@ class _LendLibraryItemSaveState extends State<LendLibraryItemSave> {
           } else {
             _message = 'Please fill out all fields and try again.';
           }
-          setState(() {
-            _message = _message;
-            _loading = _loading;
-          });
+          setState(() {});
         },
         child: Text('Save Item'),
       ),
