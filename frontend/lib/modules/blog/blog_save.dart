@@ -212,7 +212,6 @@ class _BlogSaveState extends State<BlogSave> {
     var data = {
       'blog': formVals,
     };
-    print ('data ${data}');
     _socketService.emit('saveBlog', data);
   }
 }

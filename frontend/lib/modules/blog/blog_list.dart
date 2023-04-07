@@ -33,6 +33,7 @@ class _BlogListState extends State<BlogList> {
   String _message = '';
   bool _canLoadMore = false;
   int _lastPageNumber = 1;
+  int _itemsPerPage = 25;
 
   List<BlogClass> _blogs = [];
   bool _firstLoadDone = false;
@@ -48,7 +49,6 @@ class _BlogListState extends State<BlogList> {
         if (data.containsKey('blogs')) {
           _blogs = [];
           for (var blog in data['blogs']) {
-            print ('blog, ${blog}');
             _blogs.add(BlogClass.fromJson(blog));
           }
           if (_blogs.length == 0) {
@@ -290,7 +290,9 @@ class _BlogListState extends State<BlogList> {
       _lastPageNumber = 1;
     }
     var data = {
-      'page': _lastPageNumber,
+      //'page': _lastPageNumber,
+      'skip': (_lastPageNumber - 1) * _itemsPerPage,
+      'limit': _itemsPerPage,
       'sortKey': '-created_at',
       'tags': [],
     };

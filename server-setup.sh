@@ -20,7 +20,7 @@ git clone https://$GITHUB_TOKEN@github.com/clover-coop/green_city_app.git && \
 apt-get -y install libssl-dev && \
     pip3 install -r ./requirements.txt && \
     snap install flutter --classic && \
-    flutter channel beta && flutter upgrade && flutter config --enable-web && \
+    flutter channel stable && flutter upgrade && flutter config --enable-web && \
     cd frontend && flutter build web && cd ../ && \
     cp systemd_web_server_green_city_app.service /etc/systemd/system/systemd_web_server_green_city_app.service && \
     systemctl daemon-reload && \

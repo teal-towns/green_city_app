@@ -10,3 +10,6 @@ def create_all_indices(db):
 
     db['blog'].create_index([('title', pymongo.ASCENDING), \
         ('tags', pymongo.ASCENDING)], unique=True)
+
+    db['lendLibraryItem'].create_index([('title', pymongo.ASCENDING), \
+        ('tags', pymongo.ASCENDING)], unique=True)
