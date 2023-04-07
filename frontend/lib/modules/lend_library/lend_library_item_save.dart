@@ -117,7 +117,15 @@ class _LendLibraryItemSaveState extends State<LendLibraryItemSave> {
   }
 
   void _init() async {
-    if (!_skipCurrentLocation) {
+    var currentUser = Provider.of<CurrentUserState>(context, listen: false).currentUser;
+    if (currentUser.lngLat.length > 0) {
+      _formValsUser['longitude'] = currentUser.lngLat[0];
+      _formValsUser['latitude'] = currentUser.lngLat[1];
+      setState(() {
+        _formValsUser = _formValsUser;
+      });
+    }
+    else if (!_skipCurrentLocation) {
       var coordinates = await _location.getLocation();
       if (coordinates.latitude != null) {
         _formValsUser['latitude'] = coordinates.latitude!;
@@ -167,7 +175,8 @@ class _LendLibraryItemSaveState extends State<LendLibraryItemSave> {
   }
 
   Widget _buildUserLngLat(BuildContext context, currentUserState) {
-    if (currentUserState.currentUser.lngLat.length < 1) {
+    //if (currentUserState.currentUser.lngLat.length < 1) {
+    if (true) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -176,17 +185,27 @@ class _LendLibraryItemSaveState extends State<LendLibraryItemSave> {
               Expanded(
                 flex: 1,
                 child: _inputFields.inputNumber(context, _formValsUser, 'longitude', label: 'Longitude', required: true, onChange: (double? val) {
-                  saveUser(currentUserState);
+                  if (val != null) {
+                    setState(() { _formValsUser['longitude'] = val!; });
+                  }
                 }),
               ),
               SizedBox(width: 10),
               Expanded(
                 flex: 1,
                 child: _inputFields.inputNumber(context, _formValsUser, 'latitude', label: 'Latitude', required: true, onChange: (double? val) {
-                  saveUser(currentUserState);
+                  if (val != null) {
+                    setState(() { _formValsUser['latitude'] = val!; });
+                  }
                 }),
               ),
               SizedBox(width: 10),
+              ElevatedButton(
+                onPressed: () {
+                  saveUser(currentUserState);
+                },
+                child: Text('Save'),
+              ),
             ]
           ),
           SizedBox(height: 10),
