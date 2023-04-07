@@ -183,17 +183,33 @@ class _AppScaffoldState extends State<AppScaffoldComponent> {
 
   Widget _buildHeader(BuildContext context, var currentUserState) {
     List<Widget> rows = [
+      //Expanded(
+      //  flex: 1,
+      //  child: _buildNavButton('/home', 'Home', Icons.home, context, width: double.infinity, fontSize: 10),
+      //),
       Expanded(
         flex: 1,
-        child: _buildNavButton('/home', 'Home', Icons.home, context, width: double.infinity, fontSize: 10),
+        child: _buildNavButton('/blog', 'Blog', Icons.description, context, width: double.infinity, fontSize: 10),
+      ),
+      Expanded(
+        flex: 1,
+        child: _buildNavButton('/design', 'Design', Icons.hive, context, width: double.infinity, fontSize: 10),
+      ),
+      Expanded(
+        flex: 1,
+        child: _buildNavButton('/lend-library', 'Lend Library', Icons.build, context, width: double.infinity, fontSize: 10),
+      ),
+      Expanded(
+        flex: 1,
+        child: _buildNavButton('/team', 'Team', Icons.diversity_3, context, width: double.infinity, fontSize: 10),
       ),
     ];
-    if (!currentUserState.isLoggedIn) {
-      rows.add(Expanded(
-        flex: 1,
-        child: _buildUserButton(context, currentUserState, width: double.infinity, fontSize: 10),
-      ));
-    }
+    //if (!currentUserState.isLoggedIn) {
+    //  rows.add(Expanded(
+    //    flex: 1,
+    //    child: _buildUserButton(context, currentUserState, width: double.infinity, fontSize: 10),
+    //  ));
+    //}
     rows.add(
       Expanded(
         flex: 1,
