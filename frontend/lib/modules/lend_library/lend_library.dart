@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:green_city_app/common/localstorage_service.dart';
+import 'package:green_city_app/modules/user_auth/user_class.dart';
+import 'package:localstorage/localstorage.dart';
 import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 
@@ -21,6 +24,8 @@ class _LendLibraryState extends State<LendLibrary> {
   SocketService _socketService = SocketService();
   InputFields _inputFields = InputFields();
   Location _location = Location();
+  LocalstorageService _localstorageService = LocalstorageService();
+
 
   final _formKey = GlobalKey<FormState>();
   var _filters = {
@@ -168,12 +173,28 @@ class _LendLibraryState extends State<LendLibrary> {
 
   void _init() async {
     if (!_skipCurrentLocation) {
-      var coordinates = await _location.getLocation();
-      if (coordinates.latitude != null) {
+      var coordinates;
+      UserClass? _currentUser = Provider.of<CurrentUserState>(context, listen: false).currentUser;
+      LocalStorage _localStorage = _localstorageService.localstorage;
+      List<dynamic>? _lngLatLocalStored = _localStorage.getItem('lngLat');
+      if (_lngLatLocalStored != null){
+        _filters['lat'] =  _lngLatLocalStored.elementAt(1);
+        _filters['lng'] =  _lngLatLocalStored.elementAt(0);
+      }
+      else if (_currentUser!=null && _currentUser.lngLat != []){
         setState(() {
-          _filters['lat'] = coordinates.latitude!;
-          _filters['lng'] = coordinates.longitude!;
+          _filters['lat'] =  _currentUser.lngLat.elementAt(1);
+          _filters['lng'] =  _currentUser.lngLat.elementAt(0);
         });
+      } else {
+        coordinates = await _location.getLocation();
+        if (coordinates.latitude != null) {
+          _localstorageService.localstorage.setItem('lngLat', [coordinates.longitude!, coordinates.latitude!]);
+          setState(() {
+            _filters['lat'] = coordinates.latitude!;
+            _filters['lng'] = coordinates.longitude!;
+          });
+        }
       }
       _locationLoaded = true;
       checkFirstLoad();
@@ -280,7 +301,7 @@ class _LendLibraryState extends State<LendLibrary> {
     );
   }
 
-  _buildLendLibraryItemResults(BuildContext context, var currentUserState) {
+  _buildLendLibraryItemResults(BuildContext context, CurrentUserState currentUserState) {
     if (_lendLibraryItems.length > 0) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
