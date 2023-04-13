@@ -6,7 +6,7 @@ class UserClass {
   UserClass(this.id, this.email, this.first_name, this.last_name, this.status, this.username, this.session_id, this.roles,
     this.created_at, this.lngLat);
   UserClass.fromJson(Map<String, dynamic> jsonData) {
-    this.id = jsonData.containsKey('_id') ? jsonData['_id'] : jsonData.containsKey('id')? jsonData['id'] : ''; // checking '_id' & 'id' due to db user has '_id' & local storage currentUser has 'id'
+    this.id = jsonData.containsKey('_id') ? jsonData['_id'] : jsonData.containsKey('id') ? jsonData['id'] : ''; // checking '_id' & 'id' due to db user has '_id' & local storage currentUser has 'id'
     this.email = jsonData.containsKey('email') ? jsonData['email'] : '';
     this.first_name = jsonData.containsKey('first_name') ? jsonData['first_name'] : '';
     this.last_name = jsonData.containsKey('last_name') ? jsonData['last_name'] : '';

@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
+import 'package:location/location.dart';
 
 import '../../common/localstorage_service.dart';
 import '../../common/socket_service.dart';
@@ -74,7 +76,7 @@ class CurrentUserState extends ChangeNotifier {
   void checkAndLogin() {
     getLocalstorage();
     Map<String, dynamic>? _localStorageUser = _localstorage?.getItem('currentUser');
-    UserClass? user = _localStorageUser!=null? UserClass.fromJson(_localStorageUser):null;
+    UserClass? user = _localStorageUser != null? UserClass.fromJson(_localStorageUser):null;
     if (user != null) {
       _status = "loading";
       _socketService.emit('getUserSession', {  'user_id': user.id, 'session_id': user.session_id });
@@ -88,6 +90,25 @@ class CurrentUserState extends ChangeNotifier {
       _status = "loading";
       _socketService.emit('logout', { 'user_id': _currentUser!.id, 'session_id': _currentUser!.session_id });
     }
+  }
+
+  Future<List<dynamic>> getUserLocation() async {
+    List<dynamic> _lngLat = [];
+    LocalStorage _localStorage = _localstorageService.localstorage;
+    List<dynamic>? _lngLatLocalStored = _localStorage.getItem('lngLat');
+    if (_lngLatLocalStored != null){
+      _lngLat = _lngLatLocalStored;
+    }
+    else if (_currentUser != null && _currentUser?.lngLat != []){
+      _lngLat = _currentUser!.lngLat;
+    } else {
+      LocationData coordinates = await Location().getLocation();
+      if (coordinates.latitude != null) {
+        _localstorageService.localstorage.setItem('lngLat', [coordinates.longitude, coordinates.latitude]);
+          _lngLat = [coordinates.longitude!, coordinates.latitude!];
+      }
+    }
+    return _lngLat;
   }
 
   bool hasRole(String role) {
