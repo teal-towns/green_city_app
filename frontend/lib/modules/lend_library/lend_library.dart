@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 
 import '../../app_scaffold.dart';
@@ -10,6 +9,7 @@ import '../../common/form_input/input_fields.dart';
 import './lend_library_item_class.dart';
 import './lend_library_item_state.dart';
 import '../user_auth/current_user_state.dart';
+
 
 class LendLibrary extends StatefulWidget {
   @override
@@ -20,7 +20,7 @@ class _LendLibraryState extends State<LendLibrary> {
   List<String> _routeIds = [];
   SocketService _socketService = SocketService();
   InputFields _inputFields = InputFields();
-  Location _location = Location();
+
 
   final _formKey = GlobalKey<FormState>();
   var _filters = {
@@ -168,13 +168,9 @@ class _LendLibraryState extends State<LendLibrary> {
 
   void _init() async {
     if (!_skipCurrentLocation) {
-      var coordinates = await _location.getLocation();
-      if (coordinates.latitude != null) {
-        setState(() {
-          _filters['lat'] = coordinates.latitude!;
-          _filters['lng'] = coordinates.longitude!;
-        });
-      }
+      List<dynamic> _userLngLat = await Provider.of<CurrentUserState>(context, listen: false).getUserLocation();
+      _filters['lat'] =  _userLngLat.elementAt(1);
+      _filters['lng'] =  _userLngLat.elementAt(0);
       _locationLoaded = true;
       checkFirstLoad();
     }
@@ -280,7 +276,7 @@ class _LendLibraryState extends State<LendLibrary> {
     );
   }
 
-  _buildLendLibraryItemResults(BuildContext context, var currentUserState) {
+  _buildLendLibraryItemResults(BuildContext context, CurrentUserState currentUserState) {
     if (_lendLibraryItems.length > 0) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
